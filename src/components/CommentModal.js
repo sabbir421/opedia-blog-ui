@@ -57,7 +57,7 @@ const CommentModal = ({ open, onClose, blog }) => {
 
               <div style={{marginLeft:"10px"}}>
                 <h6>Comments</h6>
-                {comments.map((comment) => (
+                {comments?.map((comment) => (
                   <div>
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <Person2OutlinedIcon />
