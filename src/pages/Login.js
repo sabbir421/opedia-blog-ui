@@ -48,8 +48,13 @@ export default function SignIn() {
       email: data.get("email"),
       password: data.get("password"),
     };
-    dispatch(fetchUserData(userData));
-    navigate("/");
+    dispatch(fetchUserData(userData))
+    .then(() => {
+      navigate("/");
+    })
+    .catch((error) => {
+      console.error("Login error:", error);
+    });
   };
 
   return (
