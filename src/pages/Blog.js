@@ -32,7 +32,7 @@ const Blog = () => {
       console.error("Error compressing image:", error);
     }
   };
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const formDataToSend = new FormData();
     formDataToSend.append("title", title);
     formDataToSend.append("blog", blog);
@@ -40,15 +40,18 @@ const Blog = () => {
     formDataToSend.append("ownerName", loginUser?.userName);
     formDataToSend.append("blogImage", blogImage);
 
-    dispatch(createBlog({ token, data: formDataToSend }));
-    navigate("/")
+    await dispatch(createBlog({ token, data: formDataToSend }));
+    await dispatch(getBlogs(token));
+    navigate("/");
   };
 
   return (
-  <Layout>
-      <h3 style={{fontFamily:"sans-serif",textAlign:"center"}}>Create Blog</h3>
+    <Layout>
+      <h3 style={{ fontFamily: "sans-serif", textAlign: "center" }}>
+        Create Blog
+      </h3>
       <Box
-      style={{width:"40%",marginLeft:"30%"}}
+        style={{ width: "40%", marginLeft: "30%" }}
         component="form"
         sx={{
           "& .MuiTextField-root": { m: 1, width: "25ch" },
@@ -58,7 +61,7 @@ const Blog = () => {
       >
         <div>
           <TextField
-          style={{width:"100%"}}
+            style={{ width: "100%" }}
             required
             id="outlined-required"
             label="Blog Title"
@@ -66,7 +69,7 @@ const Blog = () => {
             onChange={(e) => setTitle(e.target.value)}
           />
           <TextField
-           style={{width:"100%"}}
+            style={{ width: "100%" }}
             required
             id="outlined-multiline-flexible"
             label="Blog"
@@ -76,7 +79,7 @@ const Blog = () => {
             onChange={(e) => setBlog(e.target.value)}
           />
           <MuiFileInput
-            style={{ marginBottom: "15px", marginTop: "15px",width:"100%" }}
+            style={{ marginBottom: "15px", marginTop: "15px", width: "100%" }}
             placeholder="Uplod Image"
             InputProps={{
               inputProps: {
@@ -87,10 +90,20 @@ const Blog = () => {
             value={blogImage}
             onChange={(e) => handleImage(e)}
           />
-          <Button  style={{width:"100%",color:"white",backgroundColor:"black",marginLeft:"8px"}} onClick={handleSubmit}>Create</Button>
+          <Button
+            style={{
+              width: "100%",
+              color: "white",
+              backgroundColor: "black",
+              marginLeft: "8px",
+            }}
+            onClick={handleSubmit}
+          >
+            Create
+          </Button>
         </div>
       </Box>
-      </Layout>
+    </Layout>
   );
 };
 
